@@ -13,6 +13,7 @@
           class="form-input"
           autocomplete="name"
           required
+          :disabled="store.loading"
         />
         <ValidationError :errors="store.errors" field="name" />
       </div>
@@ -27,6 +28,7 @@
           class="form-input"
           autocomplete="email"
           required
+          :disabled="store.loading"
         />
         <ValidationError :errors="store.errors" field="email" />
       </div>
@@ -41,6 +43,7 @@
           class="form-input"
           autocomplete="new-password"
           required
+          :disabled="store.loading"
         />
         <ValidationError :errors="store.errors" field="password" />
       </div>
@@ -57,13 +60,17 @@
           class="form-input"
           autocomplete="new-password"
           required
+          :disabled="store.loading"
         />
       </div>
 
       <div class="divider"></div>
 
       <div class="form-group">
-        <button type="submit" class="btn-primary">Register</button>
+        <button type="submit" class="btn-primary">
+          <IconSpinner v-show="store.loading" />
+          Register
+        </button>
       </div>
     </div>
   </form>
