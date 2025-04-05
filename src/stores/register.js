@@ -1,45 +1,51 @@
-import { reactive, ref } from "vue";
-import { defineStore } from "pinia";
+import { reactive, ref } from 'vue'
+import { defineStore } from 'pinia'
+import { useAuth } from '@/stores/auth'
 
-export const useRegister = defineStore("register", () => {
-  const errors = reactive({});
-  const loading = ref(false);
+export const useRegister = defineStore('register', () => {
+  const auth = useAuth()
+  const errors = reactive({})
+  const loading = ref(false)
   const form = reactive({
-    name: "",
-    email: "",
-    password: "",
-    password_confirmation: "",
-  });
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+  })
 
   function resetForm() {
-    form.name = "";
-    form.email = "";
-    form.password = "";
-    form.password_confirmation = "";
+    form.name = ''
+    form.email = ''
+    form.password = ''
+    form.password_confirmation = ''
+
+    for (const key in errors) {
+      delete errors[key]
+    }
   }
 
   async function handleSubmit() {
-    if (loading.value) return;
+    if (loading.value) return
 
-    loading.value = true;
-    errors.value = {};
+    loading.value = true
+    errors.value = {}
 
     return window.axios
-      .post("auth/register", form)
+      .post('auth/register', form)
       .then((response) => {
-        console.log(response.data);
+        auth.login(response.data.access_token)
       })
       .catch((error) => {
         if (error.response.status === 422) {
-          errors.value = error.response.data.errors;
+          errors.value = error.response.data.errors
         }
       })
       .finally(() => {
-        form.password = "";
-        form.password_confirmation = "";
-        loading.value = false;
-      });
+        form.password = ''
+        form.password_confirmation = ''
+        loading.value = false
+      })
   }
 
-  return { form, errors, loading, resetForm, handleSubmit };
-});
+  return { form, errors, loading, resetForm, handleSubmit }
+})

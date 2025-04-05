@@ -1,5 +1,8 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterLink, RouterView } from 'vue-router'
+import { useAuth } from '@/stores/auth'
+
+const auth = useAuth()
 </script>
 
 <template>
@@ -11,20 +14,27 @@ import { RouterLink, RouterView } from "vue-router";
             <div class="logo-icon">P</div>
             myParking
           </h2>
-          <RouterLink class="router-link" :to="{ name: 'home' }">
-            Home
-          </RouterLink>
+
+          <template v-if="auth.check">
+            <RouterLink class="router-link" :to="{ name: 'vehicles.index' }"> Vehicles </RouterLink>
+          </template>
+          <template v-else>
+            <RouterLink class="router-link" :to="{ name: 'home' }"> Home </RouterLink>
+          </template>
         </div>
         <div class="nav-right">
-          <RouterLink class="router-link" :to="{ name: 'register' }">
-            Register
-          </RouterLink>
+          <template v-if="auth.check">
+            <button @click="auth.logout" class="router-link">Logout</button>
+          </template>
+          <template v-else>
+            <RouterLink class="router-link" :to="{ name: 'register' }"> Register </RouterLink>
+          </template>
         </div>
       </nav>
     </div>
   </header>
 
-  <div class="container content">
+  <div class="main-content">
     <RouterView />
   </div>
 </template>
@@ -33,26 +43,18 @@ import { RouterLink, RouterView } from "vue-router";
 .header {
   padding: 1.5rem 0;
   background-color: #f3f4f6; /* gray-100 */
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
-@media (min-width: 768px) {
-  .container {
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
+  padding: 0 1rem;
 }
 
 .nav {
   display: flex;
-  justify-content:start;
+  justify-content: space-between;
   gap: 1rem;
 }
 
@@ -79,14 +81,14 @@ import { RouterLink, RouterView } from "vue-router";
   width: 1.5rem;
   height: 1.5rem;
   color: white;
-  border-radius: 4px;
   text-align: center;
-  font-weight: bold;
+  border-radius: 0.375rem;
+  font-weight: normal;
 }
 
 .router-link {
-  text-decoration: none;
   color: #2563eb;
+  text-decoration: none;
   font-weight: 500;
 }
 
@@ -94,13 +96,9 @@ import { RouterLink, RouterView } from "vue-router";
   text-decoration: underline;
 }
 
-.content {
-  padding-top: 2rem;
-}
-
-@media (min-width: 768px) {
-  .content {
-    padding-top: 4rem;
-  }
+.main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
 }
 </style>
