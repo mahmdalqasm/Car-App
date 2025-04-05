@@ -14,6 +14,7 @@
           autocomplete="name"
           required
         />
+        <ValidationError :errors="store.errors" field="name" />
       </div>
 
       <div class="form-group">
@@ -27,6 +28,7 @@
           autocomplete="email"
           required
         />
+        <ValidationError :errors="store.errors" field="email" />
       </div>
 
       <div class="form-group">
@@ -40,6 +42,7 @@
           autocomplete="new-password"
           required
         />
+        <ValidationError :errors="store.errors" field="password" />
       </div>
 
       <div class="form-group">
