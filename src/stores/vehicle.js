@@ -68,6 +68,10 @@ function getVehicle(vehicle) {
   });
 }
 
+  function deleteVehicle(vehicle) {
+    window.axios.delete(`vehicles/${vehicle.id}`).then(getVehicles)
+  }
+
   return {
     form,
     errors,
@@ -78,5 +82,6 @@ function getVehicle(vehicle) {
     getVehicles,
     getVehicle,
     updateVehicle,
+    deleteVehicle,
   }
 })

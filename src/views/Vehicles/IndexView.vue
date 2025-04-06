@@ -1,39 +1,53 @@
 <script setup>
-import { onMounted } from 'vue'
-import { useVehicle } from '@/stores/vehicle'
+import { onMounted } from "vue";
+import { useVehicle } from "@/stores/vehicle";
 
-const store = useVehicle()
+const store = useVehicle();
 
-onMounted(store.getVehicles)
+onMounted(store.getVehicles);
 </script>
-<template>
-  <div class="vehicles-wrapper">
-    <h1 class="page-title">My vehicles</h1>
 
-    <RouterLink :to="{ name: 'vehicles.create' }" class="btn btn-primary full-width">
+<template>
+  <div class="vehicle-container">
+    <h1 class="title">My vehicles</h1>
+
+    <RouterLink
+      :to="{ name: 'vehicles.create' }"
+      class="add-vehicle-btn"
+    >
       Add vehicle
     </RouterLink>
 
-    <div class="form-separator"></div>
+    <div class="divider"></div>
 
-    <div class="vehicle-list">
-      <div v-for="vehicle in store.vehicles" :key="vehicle.id" class="vehicle-card">
+    <div class="vehicles-list">
+      <div
+        v-for="vehicle in store.vehicles"
+        :key="vehicle.id"
+        class="vehicle-item"
+      >
         <div class="vehicle-info">
-          <div class="vehicle-plate">
+          <div class="plate-number">
             {{ vehicle.plate_number }}
           </div>
-          <div class="vehicle-description">
+          <div class="description">
             {{ vehicle.description }}
           </div>
         </div>
-        <div class="vehicle-actions">
+        <div class="actions">
           <RouterLink
             :to="{ name: 'vehicles.edit', params: { id: vehicle.id } }"
-            class="btn btn-secondary small"
+            class="edit-btn"
           >
             Edit
           </RouterLink>
-          <button type="button" class="btn btn-danger small">X</button>
+          <button
+            type="button"
+            @click="store.deleteVehicle(vehicle)"
+            class="delete-btn"
+          >
+            X
+          </button>
         </div>
       </div>
     </div>
@@ -41,101 +55,102 @@ onMounted(store.getVehicles)
 </template>
 
 <style scoped>
-.vehicles-wrapper {
+.vehicle-container {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  max-width: 24rem;
+  max-width: 100%;
   margin: 0 auto;
 }
 
-.page-title {
+.title {
   font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 1rem;
   text-align: center;
 }
 
-.full-width {
-  width: 100%;
+.add-vehicle-btn {
+  background-color: #3b82f6;
+  color: white;
+  padding: 0.75rem;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 0.375rem;
+  display: block;
+  margin-bottom: 1.5rem;
 }
 
-.form-separator {
-  border-top: 1px solid #ccc;
+.add-vehicle-btn:hover {
+  background-color: #2563eb;
+}
+
+.divider {
   height: 1px;
+  background-color: #e5e7eb;
   margin: 1.5rem 0;
 }
 
-.vehicle-list {
+.vehicles-list {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
-.vehicle-card {
-  background-color: #f3f4f6;
-  padding: 0.5rem;
+.vehicle-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  background-color: #f3f4f6;
+  padding: 1rem;
+  border-radius: 0.375rem;
 }
 
 .vehicle-info {
   display: flex;
+  flex-grow: 1;
   align-items: center;
-  overflow: hidden;
-  width: 100%;
 }
 
-.vehicle-plate {
+.plate-number {
   font-size: 1.25rem;
   font-weight: bold;
-  white-space: nowrap;
+  color: #333;
 }
 
-.vehicle-description {
+.description {
+  font-size: 0.875rem;
+  color: #4b5563;
   padding-left: 0.5rem;
-  color: #6b7280;
-  flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.vehicle-actions {
+.actions {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.5rem;
+  align-items: center;
 }
 
-.btn {
-  padding: 0.4rem 0.75rem;
-  border: none;
-  font-weight: bold;
+.edit-btn {
+  background-color: #6b7280;
+  color: white;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
   border-radius: 0.375rem;
+  font-size: 0.875rem;
+}
+
+.delete-btn {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
   cursor: pointer;
 }
 
-.btn.small {
-  font-size: 0.75rem;
-}
-
-.btn-primary {
-  background-color: #2563eb;
-  color: white;
-}
-
-.btn-secondary {
-  background-color: #e5e7eb;
-  color: #111827;
-}
-
-.btn-danger {
-  background-color: #dc2626;
-  color: white;
-}
-
-.btn-danger:hover {
-  background-color: #ef4444;
+.delete-btn:hover {
+  background-color: #f87171;
 }
 </style>
