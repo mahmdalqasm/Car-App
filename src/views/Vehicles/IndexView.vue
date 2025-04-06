@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted } from "vue";
-import { useVehicle } from "@/stores/vehicle";
+import { onMounted } from 'vue'
+import { useVehicle } from '@/stores/vehicle'
 
-const store = useVehicle();
+const store = useVehicle()
 
-onMounted(store.getVehicles);
+onMounted(store.getVehicles)
 </script>
 <template>
   <div class="vehicles-wrapper">
@@ -17,11 +17,7 @@ onMounted(store.getVehicles);
     <div class="form-separator"></div>
 
     <div class="vehicle-list">
-      <div
-        v-for="vehicle in store.vehicles"
-        :key="vehicle.id"
-        class="vehicle-card"
-      >
+      <div v-for="vehicle in store.vehicles" :key="vehicle.id" class="vehicle-card">
         <div class="vehicle-info">
           <div class="vehicle-plate">
             {{ vehicle.plate_number }}
@@ -31,7 +27,12 @@ onMounted(store.getVehicles);
           </div>
         </div>
         <div class="vehicle-actions">
-          <button type="button" class="btn btn-secondary small">Edit</button>
+          <RouterLink
+            :to="{ name: 'vehicles.edit', params: { id: vehicle.id } }"
+            class="btn btn-secondary small"
+          >
+            Edit
+          </RouterLink>
           <button type="button" class="btn btn-danger small">X</button>
         </div>
       </div>
