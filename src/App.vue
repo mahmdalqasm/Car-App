@@ -1,8 +1,8 @@
 <script setup>
-import { RouterLink, RouterView } from "vue-router";
-import { useAuth } from "@/stores/auth";
+import { RouterLink, RouterView } from 'vue-router'
+import { useAuth } from '@/stores/auth'
 
-const auth = useAuth();
+const auth = useAuth()
 </script>
 
 <template>
@@ -16,30 +16,23 @@ const auth = useAuth();
           </h2>
 
           <template v-if="auth.check">
-            <RouterLink class="router-link" :to="{ name: 'vehicles.index' }">
-              Vehicles
-            </RouterLink>
+            <RouterLink class="router-link" :to="{ name: 'vehicles.index' }"> Vehicles </RouterLink>
           </template>
           <template v-else>
-            <RouterLink class="router-link" :to="{ name: 'home' }">
-              Home
-            </RouterLink>
+            <RouterLink class="router-link" :to="{ name: 'home' }"> Home </RouterLink>
           </template>
         </div>
         <div class="nav-right">
           <template v-if="auth.check">
-            <RouterLink class="router-link" :to="{ name: 'profile.edit' }">
-              Profile
+            <RouterLink class="router-link" :to="{ name: 'profile.edit' }"> Profile </RouterLink>
+            <RouterLink class="router-link" :to="{ name: 'profile.change-password' }">
+              Change password
             </RouterLink>
             <button @click="auth.logout" class="router-link">Logout</button>
           </template>
           <template v-else>
-            <RouterLink class="router-link" :to="{ name: 'login' }">
-              Login
-            </RouterLink>
-            <RouterLink class="router-link" :to="{ name: 'register' }">
-              Register
-            </RouterLink>
+            <RouterLink class="router-link" :to="{ name: 'login' }"> Login </RouterLink>
+            <RouterLink class="router-link" :to="{ name: 'register' }"> Register </RouterLink>
           </template>
         </div>
       </nav>
