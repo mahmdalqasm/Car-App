@@ -1,9 +1,9 @@
 <script setup>
-import { useParking } from "@/stores/parking";
+import { useParking } from '@/stores/parking'
 
-const store = useParking();
+const store = useParking()
 
-store.getStoppedParkings();
+store.getStoppedParkings()
 </script>
 
 <template>
@@ -11,11 +11,7 @@ store.getStoppedParkings();
     <h1 class="title">Parking history</h1>
 
     <div class="parking-list">
-      <div
-        v-for="parking in store.stoppedParkings"
-        :key="parking.id"
-        class="parking-item"
-      >
+      <div v-for="parking in store.stoppedParkings" :key="parking.id" class="parking-item">
         <div class="plate">{{ parking.vehicle.plate_number }}</div>
         <div class="zone">
           {{ parking.zone.name }}
@@ -35,9 +31,12 @@ store.getStoppedParkings();
           </span>
           <span class="currency">&nbsp;&euro;</span>
         </div>
-        <button type="button" class="btn btn-secondary">
-          view details
-        </button>
+        <RouterLink
+          :to="{ name: 'parkings.show', params: { id: parking.id } }"
+          class="btn btn-secondary uppercase"
+        >
+          VIWE <DETAILS></DETAILS>
+        </RouterLink>
       </div>
     </div>
   </div>

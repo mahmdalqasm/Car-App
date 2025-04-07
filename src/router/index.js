@@ -37,12 +37,6 @@ const router = createRouter({
       component: () => import('@/views/Auth/LoginView.vue'),
     },
     {
-      path: '/vehicles',
-      name: 'vehicles.index',
-      beforeEnter: auth,
-      component: () => import('@/views/Vehicles/IndexView.vue'),
-    },
-    {
       path: '/profile',
       name: 'profile.edit',
       beforeEnter: auth,
@@ -53,6 +47,12 @@ const router = createRouter({
       name: 'profile.change-password',
       beforeEnter: auth,
       component: () => import('@/views/Profile/ChangePassword.vue'),
+    },
+    {
+      path: '/vehicles',
+      name: 'vehicles.index',
+      beforeEnter: auth,
+      component: () => import('@/views/Vehicles/IndexView.vue'),
     },
     {
       path: '/vehicles/create',
@@ -83,6 +83,12 @@ const router = createRouter({
       name: 'parkings.history',
       beforeEnter: auth,
       component: () => import('@/views/Parkings/ParkingHistory.vue'),
+    },
+    {
+      path: '/parkings/:id',
+      name: 'parkings.show',
+      beforeEnter: auth,
+      component: () => import('@/views/Parkings/ParkingDetails.vue'),
     },
   ],
 })
