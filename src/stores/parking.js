@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { useRouter } from 'vue-router'
 
 export const useParking = defineStore('parking', () => {
+  const stoppedParkings = ref([])
   const router = useRouter()
   const parkings = ref([])
   const errors = reactive({})
@@ -11,6 +12,12 @@ export const useParking = defineStore('parking', () => {
     vehicle_id: null,
     zone_id: null,
   })
+
+  function getStoppedParkings() {
+    return window.axios.get('parkings/history').then((response) => {
+      stoppedParkings.value = response.data.data
+    })
+  }
 
   function resetForm() {
     form.vehicle_id = null
@@ -58,5 +65,7 @@ export const useParking = defineStore('parking', () => {
     parkings,
     getActiveParkings,
     stopParking,
+    stoppedParkings,
+    getStoppedParkings,
   }
 })
