@@ -4,6 +4,7 @@ import { useRouter } from 'vue-router'
 
 export const useParking = defineStore('parking', () => {
   const router = useRouter()
+  const parkings = ref([])
   const errors = reactive({})
   const loading = ref(false)
   const form = reactive({
@@ -37,5 +38,25 @@ export const useParking = defineStore('parking', () => {
       .finally(() => (loading.value = false))
   }
 
-  return { form, errors, loading, resetForm, startParking }
+  function getActiveParkings() {
+    return window.axios.get('parkings').then((response) => {
+      parkings.value = response.data.data
+    })
+  }
+
+  function stopParking(parking) {
+    window.axios.put(`parkings/${parking.id}`).then(getActiveParkings)
+  }
+
+
+  return {
+    form,
+    errors,
+    loading,
+    resetForm,
+    startParking,
+    parkings,
+    getActiveParkings,
+    stopParking,
+  }
 })
