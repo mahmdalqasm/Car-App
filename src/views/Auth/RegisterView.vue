@@ -90,7 +90,7 @@ onBeforeUnmount(store.resetForm);
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 384px; /* md:w-96 = 24rem = 384px */
+  max-width: 384px;
   margin: 0 auto;
 }
 
